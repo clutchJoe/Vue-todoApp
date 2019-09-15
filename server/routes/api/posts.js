@@ -1,5 +1,8 @@
 const express = require("express");
 const mongodb = require("mongodb");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const router = express.Router();
 
@@ -27,10 +30,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 async function loadPostsCollection() {
-    const client = await mongodb.MongoClient.connect(
-        "mongodb+srv://cj:0000@cluster0-tmp6z.mongodb.net/test?retryWrites=true&w=majority",
-        { useNewUrlParser: true }
-    );
+    const client = await mongodb.MongoClient.connect(process.env.DB_CONNECT, { useNewUrlParser: true });
     return client.db("vue_express").collection("vue_express_posts");
 }
 
